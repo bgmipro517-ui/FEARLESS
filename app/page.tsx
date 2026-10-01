@@ -10,7 +10,7 @@ export default function Home() {
       <div className="aurora auroraOne" /><div className="aurora auroraTwo" />
       <nav className="glass nav">
         <a className="brand" href="#"><span className="brandOrb">F</span><span>FEARLESS <b>SHOPS</b></span></a>
-        <div className="links"><a href="#products">Shop</a><a href="#features">Features</a><a href="#products">Offers</a><a href="/admin">Admin</a></div>
+        <div className="links"><a href="#products">Shop</a><a href="#features">Features</a><a href="#products">Offers</a><a href="./admin/">Admin</a></div>
         <div className="actions"><button className="iconButton" aria-label="Search">⌕</button><button className="glassButton">Cart <span>0</span></button></div>
       </nav>
 
