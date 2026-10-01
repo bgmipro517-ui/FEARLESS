@@ -10,7 +10,7 @@ export default function Home() {
       <div className="aurora auroraOne" /><div className="aurora auroraTwo" />
       <nav className="glass nav">
         <a className="brand" href="#"><span className="brandOrb">F</span><span>FEARLESS <b>SHOPS</b></span></a>
-        <div className="links"><a href="#products">Shop</a><a href="#features">Features</a><a href="#">Offers</a></div>
+        <div className="links"><a href="#products">Shop</a><a href="#features">Features</a><a href="#products">Offers</a><a href="/admin">Admin</a></div>
         <div className="actions"><button className="iconButton" aria-label="Search">⌕</button><button className="glassButton">Cart <span>0</span></button></div>
       </nav>
 
@@ -19,7 +19,7 @@ export default function Home() {
           <div className="pill">✦ FUTURE OF SHOPPING</div>
           <h1>Shopping, made<br/><span>fearlessly beautiful.</span></h1>
           <p>Discover premium products through a crystal-clear shopping experience built around trust, speed and privacy.</p>
-          <div className="heroActions"><button className="primary">Explore Store <span>→</span></button><button className="glassButton large">View Deals</button></div>
+          <div className="heroActions"><a className="primary" href="#products">Explore Store <span>→</span></a><a className="glassButton large" href="#products">View Deals</a></div>
           <div className="trust"><span>✓ Secure checkout</span><span>✓ Privacy first</span><span>✓ Easy returns</span></div>
         </div>
         <div className="crystalStage">
@@ -36,7 +36,7 @@ export default function Home() {
         <article className="glass feature"><span>✦</span><div><strong>Premium Products</strong><p>Beautiful discovery and product experiences.</p></div></article>
       </section>
 
-      <section id="products" className="products"><div className="sectionHead"><div><small>CURATED FOR YOU</small><h2>Featured products</h2></div><button className="glassButton">View all →</button></div>
+      <section id="products" className="products"><div className="sectionHead"><div><small>CURATED FOR YOU</small><h2>Featured products</h2></div><a className="glassButton" href="#products">View all →</a></div>
         <div className="productGrid">{products.map((product) => <article className="glass product" key={product.name}><div className="productVisual"><span>{product.icon}</span><button aria-label={`Add ${product.name} to wishlist`}>♡</button></div><div className="productInfo"><small>FEARLESS SELECT</small><h3>{product.name}</h3><div><strong>{product.price}</strong><button className="addButton">Add +</button></div></div></article>)}</div>
       </section>
     </main>
