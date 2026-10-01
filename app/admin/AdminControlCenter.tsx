@@ -50,10 +50,10 @@ export default function AdminControlCenter() {
       <div className="adminGlow adminGlowTwo" />
 
       <header className="glass adminTopbar">
-        <a href="/" className="brand"><span className="brandOrb">F</span><span>FEARLESS <b>SHOPS</b></span></a>
+        <a href="../" className="brand"><span className="brandOrb">F</span><span>FEARLESS <b>SHOPS</b></span></a>
         <div className="adminTopActions">
           <span className="secureBadge">● Protected session</span>
-          <a href="/" className="glassButton">View Store</a>
+          <a href="../" className="glassButton">View Store</a>
         </div>
       </header>
 
