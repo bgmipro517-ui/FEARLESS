@@ -43,7 +43,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Fearless-Stories-V4.1-Android
-          path: apps/fearless-stories/Fearless-Stories-V4-debug.apk
+          path: apps/fearless-stories/Fearless-Stories-V4.1-Hotfix.apk
           if-no-files-found: error
           retention-days: 30
       - name: Publish pre-release
