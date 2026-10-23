@@ -38,8 +38,10 @@ jobs:
         run: npm run build:web
       - name: Test offline UI and Update Manager
         run: npm run test:ui
+      - name: Bundle updater and run UI tests
+        run: npm run build:web && npm run test:ui
       - name: Generate Android project
-        run: npx cap add android && npx cap sync android
+        run: npx cap add android && npm run patch:android && npx cap sync android
       - name: Apply native Android updater and version
         run: npm run patch:android
       - name: Build APK
