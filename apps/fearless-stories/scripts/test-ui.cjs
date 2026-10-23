@@ -12,7 +12,7 @@ const document={
   getElementById(id){if(id==="content")return content;if(id==="settings")return settings;return null;},
   querySelectorAll(selector){return selector==="[data-tab]"?tabs:[];}
 };
-vm.runInNewContext(inline,{document,window:{scrollTo(){}},localStorage:{getItem(){return null},setItem(){}},URL,console});
+vm.runInNewContext(inline,{document,window:{scrollTo(){},addEventListener(){}},localStorage:{getItem(){return null},setItem(){}},URL,console});
 assert.ok(content.innerHTML.includes("Big stories."),"home content blank");
 tabs[1].onclick();assert.ok(content.innerHTML.includes("Find your next obsession."),"discover failed");
 tabs[2].onclick();assert.ok(content.innerHTML.includes("Your watchlist."),"saved failed");
