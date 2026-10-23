@@ -1,0 +1,50 @@
+name: Fearless Stories Android APK
+on:
+  push:
+    branches:
+      - codex/fearless-stories-apk-v4
+    paths:
+      - 'apps/fearless-stories/**'
+      - '.github/workflows/fearless-stories-apk.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: apps/fearless-stories
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK
+        run: sdkmanager --install 'platforms;android-36' 'build-tools;36.0.0'
+      - name: Install Capacitor
+        run: npm install --no-audit --no-fund
+      - name: Generate Android project
+        run: npx cap add android && npx cap sync android
+      - name: Build APK
+        run: chmod +x android/gradlew && cd android && ./gradlew :app:assembleDebug --no-daemon
+      - name: Name installable file
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk Fearless-Stories-V4-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fearless-Stories-V4-Android
+          path: apps/fearless-stories/Fearless-Stories-V4-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish pre-release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete fearless-stories-v4-phone-test --yes --cleanup-tag 2>/dev/null || true
+          gh release create fearless-stories-v4-phone-test Fearless-Stories-V4-debug.apk --title "Fearless Stories V4 Phone Test" --notes "Installable Android debug APK. Offline UI only until OTT backend and content are connected. Stories will be added later." --prerelease --target "$GITHUB_SHA"
