@@ -51,4 +51,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release delete fearless-stories-v4-1-hotfix --yes --cleanup-tag 2>/dev/null || true
-          gh release create fearless-stories-v4-1-hotfix Fearless-Stories-V4-debug.apk --title "Fearless Stories V4.1 Hotfix" --notes "Hotfix: fix blank main content and status bar overlap. Offline UI only; backend and stories later." --prerelease --target "$GITHUB_SHA"
+          gh release create fearless-stories-v4-1-hotfix Fearless-Stories-V4.1-Hotfix.apk --title "Fearless Stories V4.1 Hotfix" --notes "Hotfix: fix blank main content and status bar overlap. Offline UI only; backend and stories later." --prerelease --target "$GITHUB_SHA"
