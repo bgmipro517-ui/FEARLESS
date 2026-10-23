@@ -1,4 +1,4 @@
-name: Fearless Stories Android V4.1 Hotfix APK
+name: Fearless Stories Android V4.2 Update Manager
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
       - '.github/workflows/fearless-stories-apk.yml'
   workflow_dispatch:
 concurrency:
-  group: fearless-stories-android-hotfix
+  group: fearless-stories-android-v4-2
   cancel-in-progress: true
 permissions:
   contents: write
@@ -34,21 +34,27 @@ jobs:
           /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --install 'platforms;android-36' 'build-tools;36.0.0'
       - name: Install Capacitor
         run: npm install --no-audit --no-fund
+      - name: Build offline update center JavaScript
+        run: npm run build:web
+      - name: Test offline UI and Update Manager
+        run: npm run test:ui
       - name: Generate Android project
         run: npx cap add android && npx cap sync android
+      - name: Apply native Android updater and version
+        run: npm run patch:android
       - name: Build APK
         run: chmod +x android/gradlew && cd android && ./gradlew :app:assembleDebug --no-daemon
       - name: Name installable file
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk Fearless-Stories-V4.1-Hotfix.apk
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk Fearless-Stories-V4.2-Update-Manager.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: Fearless-Stories-V4.1-Android
-          path: apps/fearless-stories/Fearless-Stories-V4.1-Hotfix.apk
+          name: Fearless-Stories-V4.2-Android
+          path: apps/fearless-stories/Fearless-Stories-V4.2-Update-Manager.apk
           if-no-files-found: error
           retention-days: 30
       - name: Publish pre-release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete fearless-stories-v4-1-hotfix --yes --cleanup-tag 2>/dev/null || true
-          gh release create fearless-stories-v4-1-hotfix Fearless-Stories-V4.1-Hotfix.apk --title "Fearless Stories V4.1 Hotfix" --notes "Hotfix: fix blank main content and status bar overlap. Offline UI only; backend and stories later." --prerelease --target "$GITHUB_SHA"
+          gh release delete fearless-stories-v4-2-updater --yes --cleanup-tag 2>/dev/null || true
+          gh release create fearless-stories-v4-2-updater Fearless-Stories-V4.2-Update-Manager.apk --title "Fearless Stories V4.2 Update Manager" --notes "V4.2: Check GitHub updates in Settings, SHA-256 verify APK downloads, progress and Android installer confirmation. Offline UI only; backend and stories later." --prerelease --target "$GITHUB_SHA"
