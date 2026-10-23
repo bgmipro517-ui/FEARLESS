@@ -1,6 +1,6 @@
 {
   "name": "fearless-stories-mobile-test",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "private": true,
   "dependencies": {
     "@capacitor/core": "^8.0.0",
