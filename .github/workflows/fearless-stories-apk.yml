@@ -1,4 +1,4 @@
-name: Fearless Stories Android APK
+name: Fearless Stories Android V4.1 Hotfix APK
 on:
   push:
     branches:
@@ -7,6 +7,9 @@ on:
       - 'apps/fearless-stories/**'
       - '.github/workflows/fearless-stories-apk.yml'
   workflow_dispatch:
+concurrency:
+  group: fearless-stories-android-hotfix
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
@@ -36,10 +39,10 @@ jobs:
       - name: Build APK
         run: chmod +x android/gradlew && cd android && ./gradlew :app:assembleDebug --no-daemon
       - name: Name installable file
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk Fearless-Stories-V4-debug.apk
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk Fearless-Stories-V4.1-Hotfix.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: Fearless-Stories-V4-Android
+          name: Fearless-Stories-V4.1-Android
           path: apps/fearless-stories/Fearless-Stories-V4-debug.apk
           if-no-files-found: error
           retention-days: 30
@@ -47,5 +50,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete fearless-stories-v4-phone-test --yes --cleanup-tag 2>/dev/null || true
-          gh release create fearless-stories-v4-phone-test Fearless-Stories-V4-debug.apk --title "Fearless Stories V4 Phone Test" --notes "Installable Android debug APK. Offline UI only until OTT backend and content are connected. Stories will be added later." --prerelease --target "$GITHUB_SHA"
+          gh release delete fearless-stories-v4-1-hotfix --yes --cleanup-tag 2>/dev/null || true
+          gh release create fearless-stories-v4-1-hotfix Fearless-Stories-V4-debug.apk --title "Fearless Stories V4.1 Hotfix" --notes "Hotfix: fix blank main content and status bar overlap. Offline UI only; backend and stories later." --prerelease --target "$GITHUB_SHA"
